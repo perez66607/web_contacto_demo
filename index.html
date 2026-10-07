@@ -1,0 +1,673 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Agencia de desarrollo web en El Ejido. Creamos páginas, tiendas y sistemas web que convierten visitas en clientes." />
+    <meta name="theme-color" content="#030712" />
+    <title>Northstar Studio — Desarrollo web para negocios que quieren crecer</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #030712;
+        --bg-strong: #0a1222;
+        --surface: rgba(15, 23, 42, 0.72);
+        --surface-strong: rgba(17, 24, 39, 0.96);
+        --surface-soft: rgba(255, 255, 255, 0.04);
+        --text: #f8fafc;
+        --muted: #9aa8bd;
+        --line: rgba(255, 255, 255, 0.1);
+        --cyan: #06b6d4;
+        --cyan-soft: rgba(6, 182, 212, 0.12);
+        --violet: #8b5cf6;
+        --violet-soft: rgba(139, 92, 246, 0.12);
+        --green: #34d399;
+        --shadow: 0 32px 80px rgba(2, 6, 23, 0.7);
+        --radius-xl: 30px;
+        --radius-lg: 22px;
+        --radius-md: 16px;
+        --container: min(1180px, calc(100% - 40px));
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 12% 8%, rgba(6, 182, 212, 0.18), transparent 28%),
+          radial-gradient(circle at 82% 15%, rgba(139, 92, 246, 0.17), transparent 30%),
+          radial-gradient(circle at 70% 80%, rgba(6, 182, 212, 0.08), transparent 25%),
+          var(--bg);
+        font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        content: "";
+        background-image:
+          linear-gradient(rgba(255,255,255,0.014) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.014) 1px, transparent 1px);
+        background-size: 42px 42px;
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.45), transparent 80%);
+        pointer-events: none;
+      }
+
+      ::selection { color: #fff; background: rgba(6, 182, 212, 0.35); }
+      a { color: inherit; text-decoration: none; }
+      button, input, textarea { font: inherit; }
+      img, svg { display: block; max-width: 100%; }
+      .container { width: var(--container); margin-inline: auto; }
+      .section { padding: 110px 0; }
+      .section-header { max-width: 700px; margin: 0 auto 52px; text-align: center; }
+      .eyebrow {
+        display: inline-block;
+        color: var(--cyan);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      }
+      .section-header h2, .contact-copy h2, .hero-copy h1 { margin: 14px 0 18px; letter-spacing: -0.065em; line-height: 0.98; }
+      .section-header h2, .contact-copy h2 { font-size: clamp(2.4rem, 4vw, 4.1rem); }
+      .section-header p, .hero-copy p, .contact-copy p, .feature-copy p, .case-copy p { color: var(--muted); }
+      .btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 0 24px;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        font-weight: 800;
+        cursor: pointer;
+        overflow: hidden;
+        isolation: isolate;
+        transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      }
+      .btn::before {
+        position: absolute;
+        inset: -1px;
+        z-index: -1;
+        content: "";
+        background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.8) 50%, transparent 65%);
+        transform: translateX(-140%);
+        transition: transform 700ms ease;
+      }
+      .btn:hover::before, .btn:focus-visible::before { transform: translateX(140%); }
+      .btn:hover, .btn:focus-visible { transform: translateY(-3px); }
+      .btn-primary {
+        color: #06121e;
+        background: linear-gradient(135deg, #67e8f9, #06b6d4 38%, #8b5cf6 100%);
+        box-shadow: 0 12px 28px rgba(6, 182, 212, 0.25);
+      }
+      .btn-primary:hover { box-shadow: 0 16px 36px rgba(139, 92, 246, 0.3); }
+      .btn-secondary {
+        border-color: var(--line);
+        color: var(--text);
+        background: rgba(255,255,255,0.03);
+      }
+      .btn-secondary:hover { border-color: rgba(6, 182, 212, 0.45); }
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        background: rgba(3, 7, 18, 0.72);
+        backdrop-filter: blur(16px);
+      }
+      .nav { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        font-family: "SFMono-Regular", Consolas, monospace;
+      }
+      .brand-mark {
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        border: 1px solid rgba(103, 232, 249, 0.35);
+        background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(139,92,246,0.1));
+        box-shadow: inset 0 0 25px rgba(6,182,212,0.1), 0 0 18px rgba(6,182,212,0.12);
+      }
+      .brand-mark::before {
+        width: 13px;
+        height: 13px;
+        border: 2px solid var(--cyan);
+        border-top-color: transparent;
+        border-radius: 4px;
+        transform: rotate(45deg);
+        content: "";
+      }
+      .brand .accent { color: var(--violet); }
+      .nav-links { display: flex; align-items: center; gap: 29px; }
+      .nav-link { color: var(--muted); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; transition: color 180ms ease; }
+      .nav-link:hover { color: var(--text); }
+      .header-cta { display: inline-flex; }
+      .nav-toggle { display: none; }
+      .hero { position: relative; padding: 90px 0 36px; overflow: hidden; }
+      .hero::before, .hero::after {
+        position: absolute;
+        z-index: -1;
+        border-radius: 50%;
+        content: "";
+        filter: blur(100px);
+        opacity: 0.5;
+      }
+      .hero::before { width: 420px; height: 420px; left: -120px; top: 40px; background: rgba(6,182,212,0.18); }
+      .hero::after { width: 500px; height: 500px; right: -120px; top: 80px; background: rgba(139,92,246,0.16); }
+      .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 52px; align-items: center; }
+      .hero-copy { position: relative; }
+      .hero-copy h1 { max-width: 780px; font-size: clamp(3.3rem, 6vw, 6rem); }
+      .hero-copy h1 .highlight { color: transparent; background: linear-gradient(90deg, #67e8f9, #8b5cf6 60%, #c4b5fd); -webkit-background-clip: text; background-clip: text; text-shadow: 0 0 30px rgba(103,232,249,0.18); }
+      .hero-copy p { max-width: 650px; font-size: clamp(1.05rem, 1.9vw, 1.32rem); }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+      .hero-trust { display: flex; align-items: center; gap: 10px; margin-top: 20px; color: var(--muted); font-size: 0.8rem; }
+      .hero-trust strong { color: var(--text); }
+      .hero-trust .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px rgba(52,211,153,0.8); }
+      .hero-shell {
+        position: relative;
+        min-height: 570px;
+        padding: 18px;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 32px;
+        background: rgba(15,23,42,0.68);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(16px);
+      }
+      .hero-shell::before {
+        position: absolute;
+        inset: 12px;
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 26px;
+        content: "";
+      }
+      .device-window { position: relative; z-index: 1; height: 100%; min-height: 530px; border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; background: rgba(2,6,23,0.64); overflow: hidden; }
+      .window-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .window-dots { display: flex; gap: 8px; }
+      .window-dots span { width: 10px; height: 10px; border-radius: 50%; }
+      .window-dots span:nth-child(1) { background: #fb7185; }
+      .window-dots span:nth-child(2) { background: #fbbf24; }
+      .window-dots span:nth-child(3) { background: #34d399; }
+      .window-code { color: var(--muted); font-size: 0.7rem; font-family: "SFMono-Regular", Consolas, monospace; letter-spacing: 0.08em; }
+      .dashboard { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; padding: 18px; }
+      .glass-card { border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,0.04); padding: 18px; }
+      .glass-card .label { color: var(--muted); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+      .market-score { margin-top: 12px; font-size: clamp(2.3rem, 5vw, 3.4rem); font-weight: 900; letter-spacing: -0.07em; }
+      .market-score span { color: var(--green); }
+      .bars { display: flex; align-items: end; gap: 8px; height: 118px; margin-top: 18px; }
+      .bars span { flex: 1; min-width: 0; border-radius: 9px 9px 3px 3px; background: linear-gradient(180deg, #67e8f9, rgba(6,182,212,0.15)); box-shadow: 0 0 18px rgba(6,182,212,.12); }
+      .bars span:nth-child(1){height:38%}.bars span:nth-child(2){height:52%}.bars span:nth-child(3){height:72%}.bars span:nth-child(4){height:82%}.bars span:nth-child(5){height:100%}.bars span:nth-child(6){height:90%}
+      .stat-list { display: grid; gap: 18px; margin-top: 24px; }
+      .stat-line { display: grid; gap: 7px; }
+      .stat-head { display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 0.74rem; }
+      .progress { height: 7px; border-radius: 999px; background: rgba(255,255,255,0.06); overflow: hidden; }
+      .progress i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--green), var(--cyan), var(--violet)); }
+      .hero-cta { display: flex; gap: 12px; padding: 0 18px 18px; }
+      .hero-card { flex: 1; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,0.035); }
+      .hero-card strong { display: block; font-size: 1.15rem; }
+      .hero-card span { color: var(--muted); font-size: 0.73rem; }
+      .capacity-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+      .capacity-card {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        min-height: 340px;
+        padding: 24px;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: var(--radius-lg);
+        background: linear-gradient(180deg, rgba(15,23,42,0.78), rgba(3,7,18,0.9));
+        box-shadow: inset 0 1px rgba(255,255,255,0.04);
+        transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+      }
+      .capacity-card:nth-child(1):hover { border-color: rgba(6,182,212,0.38); }
+      .capacity-card:nth-child(2):hover { border-color: rgba(139,92,246,0.38); }
+      .capacity-card:nth-child(3):hover { border-color: rgba(52,211,153,0.38); }
+      .capacity-card:nth-child(4):hover { border-color: rgba(251,191,36,0.38); }
+      .capacity-card:hover { transform: translateY(-8px); box-shadow: 0 24px 52px rgba(2,6,23,0.38); }
+      .capacity-card .icon { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 15px; background: rgba(255,255,255,0.04); color: var(--cyan); margin-bottom: 24px; }
+      .capacity-card:nth-child(2) .icon { color: var(--violet); }
+      .capacity-card:nth-child(3) .icon { color: var(--green); }
+      .capacity-card:nth-child(4) .icon { color: #fbbf24; }
+      .capacity-card h3 { margin: 0 0 12px; font-size: 1.2rem; }
+      .capacity-card p { margin: 0; color: var(--muted); }
+      .capacity-card .meta { margin-top: 22px; color: var(--text); font-size: 0.74rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+      .case-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+      .case-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: var(--radius-lg);
+        background: rgba(15,23,42,0.8);
+        transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+      }
+      .case-card:hover { transform: translateY(-8px); border-color: rgba(6,182,212,0.4); box-shadow: 0 24px 52px rgba(2,6,23,0.38); }
+      .case-preview { position: relative; height: 250px; padding: 14px; background: linear-gradient(135deg, rgba(6,182,212,0.12), rgba(139,92,246,0.12)); }
+      .case-preview::before { position: absolute; inset: 16px; border-radius: 16px; content: ""; border: 1px solid rgba(255,255,255,0.08); background: rgba(2,6,23,0.38); }
+      .browser-bar { position: absolute; top: 26px; left: 26px; right: 26px; z-index: 1; display: flex; align-items: center; gap: 8px; }
+      .browser-bar span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.25); }
+      .mockup { position: absolute; inset: 54px 26px 26px; z-index: 1; border-radius: 14px; overflow: hidden; background: rgba(10,17,29,0.9); border: 1px solid rgba(255,255,255,0.06); }
+      .mockup-header { height: 42px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .mockup-header i { width: 54px; height: 7px; border-radius: 999px; background: rgba(255,255,255,0.12); }
+      .mockup-content { display: grid; grid-template-columns: 0.7fr 1.3fr; height: calc(100% - 42px); }
+      .mockup-aside { border-right: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); }
+      .mockup-aside span { display: block; width: 70%; height: 12px; margin: 18px auto; border-radius: 999px; background: rgba(255,255,255,0.08); }
+      .mockup-main { padding: 18px; }
+      .mockup-main .title { width: 63%; height: 12px; border-radius: 999px; background: rgba(103,232,249,0.8); }
+      .mockup-main .text { width: 100%; height: 8px; margin-top: 12px; border-radius: 999px; background: rgba(255,255,255,0.08); }
+      .mockup-main .text:nth-child(3) { width: 78%; }
+      .mockup-main .card { height: 72px; margin-top: 18px; border-radius: 12px; background: linear-gradient(135deg, rgba(6,182,212,0.18), rgba(139,92,246,0.15)); }
+      .case-copy { padding: 20px 18px 22px; }
+      .case-copy h3 { margin: 0 0 8px; font-size: 1.15rem; }
+      .case-copy p { margin: 0; font-size: 0.8rem; }
+      .case-copy .tag { display: inline-block; margin-top: 16px; color: var(--green); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+      .stats-panel { padding: 20px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(15,23,42,0.8), rgba(6,14,27,0.85)); }
+      .stats-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+      .stat-card { padding: 22px; border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; background: rgba(255,255,255,0.03); }
+      .stat-card strong { display: block; font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -0.06em; }
+      .stat-card strong .unit { color: var(--cyan); font-size: 0.7em; }
+      .stat-card span { display: block; margin-top: 6px; color: var(--muted); font-size: 0.75rem; }
+      .stats-note { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); color: var(--muted); font-size: 0.75rem; }
+      .live { color: var(--green); font-weight: 800; }
+      .site-footer { border-top: 1px solid rgba(255,255,255,0.08); background: rgba(2, 6, 23, 0.8); }
+      .footer-grid { display: grid; grid-template-columns: 1.2fr 0.8fr 0.8fr 1fr; gap: 30px; padding: 54px 0 34px; }
+      .footer-brand p, .footer-column p, .footer-column a { color: var(--muted); }
+      .footer-column { display: grid; gap: 9px; align-content: start; }
+      .footer-column h3 { margin: 0 0 4px; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; }
+      .footer-link { font-size: 0.82rem; }
+      .footer-link:hover { color: var(--text); }
+      .socials { display: flex; gap: 10px; }
+      .socials a { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); background: rgba(255,255,255,0.03); }
+      .socials a:hover { color: var(--text); border-color: rgba(6,182,212,0.45); }
+      .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0 30px; border-top: 1px solid rgba(255,255,255,0.08); color: var(--muted); font-size: 0.75rem; }
+      .reveal { opacity: 0; transform: translateY(18px); transition: opacity 650ms ease, transform 650ms ease; }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      @media (max-width: 980px) {
+        .hero-grid { grid-template-columns: 1fr; }
+        .capacity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      @media (max-width: 720px) {
+        .nav-links, .header-cta { display: none; }
+        .nav-toggle { display: inline-flex; width: 42px; height: 42px; border-radius: 11px; background: rgba(255,255,255,0.03); border: 1px solid var(--line); color: var(--text); cursor: pointer; align-items: center; justify-content: center; }
+        .nav-links.is-open { position: absolute; z-index: 60; left: 20px; right: 20px; top: 74px; display: grid; gap: 2px; padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: rgba(3,7,18,.96); box-shadow: var(--shadow); }
+        .nav-links.is-open a { padding: 12px 10px; }
+        .hero { padding-top: 62px; }
+        .hero-actions { flex-direction: column; align-items: stretch; }
+        .btn { width: 100%; }
+        .capacity-grid, .case-grid, .stats-grid, .footer-grid { grid-template-columns: 1fr; }
+        .section { padding: 82px 0; }
+        .footer-bottom { flex-direction: column; align-items: flex-start; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="#inicio" aria-label="Northstar Studio inicio">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>NORTH<span class="accent">STAR</span></span>
+        </a>
+
+        <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
+          <a class="nav-link" href="#servicios">Servicios</a>
+          <a class="nav-link" href="#casos">Casos de Éxito</a>
+          <a class="nav-link" href="#nosotros">Por qué nosotros</a>
+          <a class="nav-link" href="#contacto">Contacto</a>
+        </nav>
+
+        <div class="header-cta">
+          <a class="btn btn-primary" href="#contacto">Iniciar Proyecto</a>
+        </div>
+
+        <button class="nav-toggle" id="navToggle" type="button" aria-controls="navLinks" aria-expanded="false" aria-label="Abrir menú">☰</button>
+      </div>
+    </header>
+
+    <main id="inicio">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <span class="eyebrow">Agencia digital en El Ejido</span>
+            <h1>Transformamos negocios locales en <span class="highlight">potencias digitales.</span></h1>
+            <p>Desarrollamos páginas, tiendas y sistemas web que hacen que las empresas ganen confianza, atraigan clientes y generen resultados reales.</p>
+            <div class="hero-actions">
+              <a
+                class="btn btn-primary"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=perez666ja07@gmail.com&su=Solicitud%20de%20proyecto%20-%20Northstar%20Studio"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Hablar por Gmail
+              </a>
+              <a class="btn btn-secondary" href="#servicios">Ver servicios</a>
+            </div>
+            <div class="hero-trust"><span class="dot"></span> <strong>+120 proyectos</strong> entregados con enfoque comercial y participación real.</div>
+          </div>
+
+          <div class="hero-shell reveal" aria-label="Demostración del rendimiento de un proyecto web">
+            <div class="device-window">
+              <div class="window-bar">
+                <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                <span class="window-code">northstar / growth</span>
+              </div>
+
+              <div class="dashboard">
+                <div class="glass-card">
+                  <span class="label">Rendimiento</span>
+                  <div class="market-score">+148<span>%</span></div>
+                  <div class="bars" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+
+                <div class="glass-card">
+                  <span class="label">SEO local</span>
+                  <div class="market-score">96<span>%</span></div>
+                  <div class="stat-list">
+                    <div class="stat-line">
+                      <div class="stat-head"><span>Visibilidad</span><strong>91%</strong></div>
+                      <div class="progress"><i style="width: 91%"></i></div>
+                    </div>
+                    <div class="stat-line">
+                      <div class="stat-head"><span>Tráfico</span><strong>84%</strong></div>
+                      <div class="progress"><i style="width: 84%"></i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero-cta">
+                <div class="hero-card"><strong>0.4s</strong><span>Tiempo medio de carga</span></div>
+                <div class="hero-card"><strong>4.2k</strong><span>Visitas trimestrales</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="servicios">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="eyebrow">Qué hacemos</span>
+            <h2>Soluciones digitales pensadas para hacer crecer tu negocio.</h2>
+            <p>No vendemos páginas bonitas. Diseñamos herramientas que te ayudan a ganar clientes, ahorrar tiempo y aumentar ventas.</p>
+          </div>
+
+          <div class="capacity-grid">
+            <article class="capacity-card reveal">
+              <div class="icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-11Zm0 0 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3>Páginas corporativas y landing pages</h3>
+                <p>Webs rápidas, claras y preparadas para captar clientes desde el primer vistazo.</p>
+              </div>
+              <span class="meta">Velocidad · Google · Conversión</span>
+            </article>
+
+            <article class="capacity-card reveal">
+              <div class="icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 8.5A2.5 2.5 0 0 1 9.5 6h5A2.5 2.5 0 0 1 17 8.5v7A2.5 2.5 0 0 1 14.5 18h-5A2.5 2.5 0 0 1 7 15.5v-7Zm6.5 2.5h.01M7 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3>Tiendas online y catálogos</h3>
+                <p>Experiencias de compra sencillas, seguras y pensadas para convertir visitas en ventas.</p>
+              </div>
+              <span class="meta">E-commerce · Catálogo · Checkout</span>
+            </article>
+
+            <article class="capacity-card reveal">
+              <div class="icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 18v-6m4 6V6m4 12v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <h3>Sistemas a medida y automatización</h3>
+                <p>Herramientas que eliminan tareas repetitivas y ayudan a tu equipo a trabajar mejor.</p>
+              </div>
+              <span class="meta">Procesos · Integraciones · Escala</span>
+            </article>
+
+            <article class="capacity-card reveal">
+              <div class="icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9Zm0 0 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3>Rediseño y optimización frontend</h3>
+                <p>Webs que funcionan excelente en móvil, mejoran la experiencia y reducen pérdidas.</p>
+              </div>
+              <span class="meta">Mobile-first · Rendimiento · UX</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="casos">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="eyebrow">Casos de éxito</span>
+            <h2>Proyectos que han ayudado a empresas a ser más visibles y competitivas.</h2>
+            <p>Ejemplos representativos de cómo una presencia digital clara puede generar más confianza y oportunidades.</p>
+          </div>
+
+          <div class="case-grid">
+            <article class="case-card reveal">
+              <div class="case-preview">
+                <div class="browser-bar"><span></span><span></span><span></span></div>
+                <div class="mockup">
+                  <div class="mockup-header"><i></i><i></i><i></i></div>
+                  <div class="mockup-content">
+                    <div class="mockup-aside"><span></span><span></span><span></span></div>
+                    <div class="mockup-main">
+                      <div class="title"></div>
+                      <div class="text"></div><div class="text"></div><div class="card"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="case-copy">
+                <h3>Exportación agrícola</h3>
+                <p>Web corporativa enfocada en exportación, credibilidad y captación de nuevos clientes.</p>
+                <span class="tag">Sector agrícola</span>
+              </div>
+            </article>
+
+            <article class="case-card reveal">
+              <div class="case-preview" style="background: linear-gradient(135deg, rgba(52,211,153,0.12), rgba(6,182,212,0.1));">
+                <div class="browser-bar"><span></span><span></span><span></span></div>
+                <div class="mockup">
+                  <div class="mockup-header"><i></i><i></i><i></i></div>
+                  <div class="mockup-content">
+                    <div class="mockup-aside"><span></span><span></span><span></span></div>
+                    <div class="mockup-main">
+                      <div class="title" style="background: rgba(52,211,153,0.8);"></div>
+                      <div class="text"></div><div class="text"></div><div class="card" style="background: linear-gradient(135deg, rgba(52,211,153,0.18), rgba(6,182,212,0.12));"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="case-copy">
+                <h3>Clínica privada</h3>
+                <p>Plataforma clara para reservar citas, presentar servicios y generar confianza.</p>
+                <span class="tag">Salud</span>
+              </div>
+            </article>
+
+            <article class="case-card reveal">
+              <div class="case-preview" style="background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(139,92,246,0.12));">
+                <div class="browser-bar"><span></span><span></span><span></span></div>
+                <div class="mockup">
+                  <div class="mockup-header"><i></i><i></i><i></i></div>
+                  <div class="mockup-content">
+                    <div class="mockup-aside"><span></span><span></span><span></span></div>
+                    <div class="mockup-main">
+                      <div class="title" style="background: rgba(251,191,36,0.8);"></div>
+                      <div class="text"></div><div class="text"></div><div class="card" style="background: linear-gradient(135deg, rgba(251,191,36,0.14), rgba(139,92,246,0.16));"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="case-copy">
+                <h3>Comercio local</h3>
+                <p>Proyecto pensado para mostrar productos, promociones y captar clientes cercanos.</p>
+                <span class="tag">Retail</span>
+              </div>
+            </article>
+
+            <article class="case-card reveal">
+              <div class="case-preview" style="background: linear-gradient(135deg, rgba(6,182,212,0.12), rgba(52,211,153,0.1));">
+                <div class="browser-bar"><span></span><span></span><span></span></div>
+                <div class="mockup">
+                  <div class="mockup-header"><i></i><i></i><i></i></div>
+                  <div class="mockup-content">
+                    <div class="mockup-aside"><span></span><span></span><span></span></div>
+                    <div class="mockup-main">
+                      <div class="title" style="background: rgba(6,182,212,0.8);"></div>
+                      <div class="text"></div><div class="text"></div><div class="card" style="background: linear-gradient(135deg, rgba(6,182,212,0.16), rgba(52,211,153,0.12));"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="case-copy">
+                <h3>Servicios profesionales</h3>
+                <p>Presencia online clara para captar contratos y transmitir autoridad profesional.</p>
+                <span class="tag">B2B</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="nosotros">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="eyebrow">Confianza basada en resultados</span>
+            <h2>Una agencia cercana, técnica y enfocada en vender.</h2>
+            <p>Trabajamos con empresas que necesitan una web que no solo se vea bien, sino que realmente ayude a crecer.</p>
+          </div>
+
+          <div class="stats-panel reveal">
+            <div class="stats-grid">
+              <article class="stat-card">
+                <strong>0.4<span class="unit">s</span></strong>
+                <span>Tiempo medio de carga</span>
+              </article>
+              <article class="stat-card">
+                <strong>98<span class="unit">%</span></strong>
+                <span>Satisfacción de clientes</span>
+              </article>
+              <article class="stat-card">
+                <strong>100<span class="unit">%</span></strong>
+                <span>Frontend sin dependencias pesadas</span>
+              </article>
+              <article class="stat-card">
+                <strong>24h<span class="unit"></span></strong>
+                <span>Respuesta inicial estimada</span>
+              </article>
+            </div>
+            <div class="stats-note">
+              <span>Optimización continua y desarrollo orientado a negocio.</span>
+              <span class="live">● Estado activo</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contacto">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="brand" href="#inicio" aria-label="Northstar Studio inicio">
+              <span class="brand-mark" aria-hidden="true"></span>
+              <span>NORTH<span class="accent">STAR</span></span>
+            </a>
+            <p>Agencia de desarrollo web para negocios que quieren mejorar su presencia, captar clientes y crecer con una estrategia digital clara.</p>
+          </div>
+
+          <div class="footer-column">
+            <h3>Menu</h3>
+            <a class="footer-link" href="#servicios">Servicios</a>
+            <a class="footer-link" href="#casos">Casos</a>
+            <a class="footer-link" href="#nosotros">Nosotros</a>
+          </div>
+
+          <div class="footer-column">
+            <h3>Legal</h3>
+            <a class="footer-link" href="#">Política de privacidad</a>
+            <a class="footer-link" href="#">Aviso legal</a>
+            <a class="footer-link" href="#">Términos y condiciones</a>
+          </div>
+
+          <div class="footer-column">
+            <h3>Contacto</h3>
+            <a class="footer-link" href="mailto:perez666ja07@gmail.com?subject=Solicitud%20de%20proyecto%20-%20Northstar%20Studio">perez666ja07@gmail.com</a>
+            <a class="footer-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=perez666ja07@gmail.com&su=Solicitud%20de%20proyecto%20-%20Northstar%20Studio" target="_blank" rel="noopener noreferrer">Gmail</a>
+            <div class="socials" aria-label="Redes sociales">
+              <a href="#" aria-label="Instagram">◎</a>
+              <a href="#" aria-label="LinkedIn">in</a>
+              <a href="#" aria-label="Facebook">f</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 Northstar Studio — El Ejido, Almería.</span>
+          <span>Diseñado para empresas que quieren avanzar.</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const navToggle = document.getElementById('navToggle');
+      const navLinks = document.getElementById('navLinks');
+
+      navToggle?.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      navLinks?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('is-open');
+          navToggle?.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      const revealItems = document.querySelectorAll('.reveal');
+      const createObserver = () => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        revealItems.forEach((item) => observer.observe(item));
+      };
+
+      if ('IntersectionObserver' in window) {
+        createObserver();
+      } else {
+        revealItems.forEach((item) => item.classList.add('visible'));
+      }
+    </script>
+  </body>
+</html>
